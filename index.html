@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Be My Valentine ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 90%;
+      max-width: 350px;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: #ff4d6d;
+    }
+
+    img {
+      width: 100%;
+      max-width: 250px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255,77,109,0.4);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(255,77,109,0.6);
+    }
+
+    #noBtn {
+      background-color: #ccc;
+      color: #333;
+      position: absolute;
+    }
+
+    .celebration {
+      display: none;
+      font-size: 1.5rem;
+      color: #ff4d6d;
+      margin-top: 15px;
+      animation: pop 0.5s ease forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 1.5rem;
+      animation: floatUp 4s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="card">
+    <h1>Vini, will you be my Valentine? 💖</h1>
+    <img id="mainGif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Puppy eyes" />
+
+    <div class="buttons">
+      <button id="yesBtn">Yes 💘</button>
+      <button id="noBtn">No 🙄</button>
+    </div>
+
+    <div class="celebration" id="celebrationText">
+      YAYYYY! I LOVE YOU ❤️🥰
+    </div>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const mainGif = document.getElementById('mainGif');
+    const celebrationText = document.getElementById('celebrationText');
+    const heartsContainer = document.getElementById('hearts');
+
+    // Move "No" button randomly
+    function moveNoButton() {
+      const container = document.getElementById('card');
+      const rect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = rect.width - btnRect.width;
+      const maxY = rect.height - btnRect.height;
+
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    }
+
+    noBtn.addEventListener('mouseenter', moveNoButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // Yes button click
+    yesBtn.addEventListener('click', () => {
+      mainGif.src = "https://media.giphy.com/media/26tPplGWjN0xLybiU/giphy.gif";
+      celebrationText.style.display = 'block';
+      startHearts();
+      noBtn.style.display = 'none';
+      yesBtn.style.display = 'none';
+    });
+
+    // Floating hearts animation
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.textContent = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }, 300);
+    }
+  </script>
+</body>
+</html>
